@@ -42,35 +42,41 @@ async function createAccount(): Promise<void> {
 <template>
   <form class="create-account-form" v-if="!accountCreated" @submit.prevent="createAccount">
     <div class="create-account-form__input">
-      <input
-        class="create-account-form__input--username"
-        type="text"
-        v-model="newUserForm.username"
-        placeholder="New Username"
-        autocomplete="off"
-        required="true"
-        maxlength="20"
-      />
+      <div class="create-account-form__input--margin">
+        <it-input
+          class="create-account-form__input--username"
+          type="text"
+          v-model="newUserForm.username"
+          placeholder="New Username"
+          autocomplete="off"
+          required="true"
+          maxlength="20"
+        />
+      </div>
 
-      <input
-        class="create-account-form__input--password"
-        type="password"
-        v-model="newUserForm.password"
-        placeholder="Password"
-        autocomplete="off"
-        required="true"
-        maxlength="20"
-      />
+      <div class="create-account-form__input--margin">
+        <it-input
+          class="create-account-form__input--password"
+          type="password"
+          v-model="newUserForm.password"
+          placeholder="Password"
+          autocomplete="off"
+          required="true"
+          maxlength="20"
+        />
+      </div>
 
-      <input
-        class="create-account-form__input--confirm-password"
-        type="password"
-        v-model="newUserForm.confirmPassword"
-        placeholder="Confirm Password"
-        autocomplete="off"
-        required="true"
-        maxlength="20"
-      />
+      <div class="create-account-form__input--margin">
+        <it-input
+          class="create-account-form__input--confirm-password"
+          type="password"
+          v-model="newUserForm.confirmPassword"
+          placeholder="Confirm Password"
+          autocomplete="off"
+          required="true"
+          maxlength="20"
+        />
+      </div>
     </div>
 
     <div class="create-account-form__submission-error">
@@ -78,18 +84,23 @@ async function createAccount(): Promise<void> {
     </div>
 
     <div class="create-account-form__btn">
-      <button v-if="!isLoading" class="createAccountForm__btn--green" type="submit">
-        <p class="createAccountForm__btn__txt">Create Account</p>
-      </button>
+      <it-button v-if="!isLoading" class="create-account-form__btn--green" type="success">
+        <p class="create-account-form__btn__txt">Create Account</p>
+      </it-button>
 
-      <button v-else class="createAccountForm__btn--loading" type="submit">
-        <p class="createAccountForm__btn__txt">Loading...</p>
-      </button>
+      <it-button v-else class="create-account-form__btn--loading" type="submit">
+        <p class="create-account-form__btn__txt">Loading...</p>
+      </it-button>
     </div>
 
-    <button class="createAccountForm__btn--grey" @click="$router.push('/')" type="button">
-      <p class="createAccountForm__btn__txt">Return to Main Menu</p>
-    </button>
+    <it-button
+      class="create-account-form__btn--grey"
+      @click="$router.push('/')"
+      type="black"
+      outlined
+    >
+      <p class="create-account-form__btn__txt">Return to Main Menu</p>
+    </it-button>
   </form>
 
   <div class="createAccountSuccess" v-else>
@@ -101,4 +112,22 @@ async function createAccount(): Promise<void> {
 </template>
 
 <style scoped lang="scss">
+.create-account-form {
+  &__input {
+    &--margin {
+      margin-top: 1vh;
+      margin-bottom: 1vh;
+    }
+  }
+  &__btn {
+    &--green {
+      margin-top: 1vh;
+      width: 100%;
+    }
+    &--grey {
+      margin-top: 1vh;
+      width: 100%;
+    }
+  }
+}
 </style>
