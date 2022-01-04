@@ -20,7 +20,7 @@ async function login(): Promise<void> {
     localStorage.removeItem("token");
     localStorage.setItem("token", token);
     router.push({
-      path: '/play',
+      path: '/QR',
     })
     return;
   }

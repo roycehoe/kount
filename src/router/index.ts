@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
 import CreateAccount from '@/components/CreateAccount.vue'
 import Login from '@/components/Login.vue'
-import HelloWorld from '@/components/HelloWorld.vue'
 import QR from '@/components/QR.vue'
 
 
@@ -25,14 +24,12 @@ const routes = [
         ]
     },
     {
-        path: '/hello-world', //to delete on production
-        name: "HelloWorld",
-        component: HelloWorld,
-    },
-    {
-        path: '/QR', //to delete on production
+        path: '/QR',
         name: "QR",
         component: QR,
+        meta: {
+            requiresAuth: true
+        }
     },
 ]
 

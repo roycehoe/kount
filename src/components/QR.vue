@@ -1,130 +1,126 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import router from "@/router";
+import { onBeforeMount, ref } from "vue";
 import { ErrorCode, ErrorMsg } from "@/services/errors";
-import { AuthUserRequest, AuthUserResponse, getAuthUserResponse } from "@/services/user/getAuthUserResponse";
+import { getQRResponse, QRResponse } from "@/services/QR/getQRResponse";
+import { CreateQRForm, CreateQRResponse, getCreateQRResponse } from "@/services/QR/getCreateQRResponse";
 
-const loginForm = ref({} as AuthUserRequest);
-const errorDisplay = ref("");
-const isLoading = ref(false)
+const QRCodes = ref({} as QRResponse)
+const QRImage = ref("")
+const createQRForm = ref({} as CreateQRForm)
 
-async function login(): Promise<void> {
-  errorDisplay.value = ""
-  isLoading.value = true
-  const { ok: isSuccessful, val: response } = await getAuthUserResponse(
-    loginForm.value
-  );
-
+async function showQRCodes() {
+  const { ok: isSuccessful, val: response } = await getQRResponse()
   if (isSuccessful) {
-    const { access_token: token } = response as AuthUserResponse;
-    localStorage.removeItem("token");
-    localStorage.setItem("token", token);
-    router.push({
-      path: '/play',
-    })
-    return;
+    QRCodes.value = response as QRResponse
   }
-  switch (response) {
-    case ErrorCode.INVALID_CREDENTIALS:
-      errorDisplay.value = ErrorMsg.INVALID_CREDENTIALS;
-      break;
-    default:
-      errorDisplay.value = ErrorMsg.SOMETHING_WENT_WRONG;
-  }
-  isLoading.value = false
 }
+
+async function createQR() {
+  const { ok: isSuccessful, val: response } = await getCreateQRResponse(createQRForm.value)
+  if (isSuccessful) {
+    const createQRResponse = response as CreateQRResponse
+    QRImage.value = createQRResponse.QR_image
+  }
+}
+
+onBeforeMount(async () => await showQRCodes());
+
 </script>
 
 <template>
-  <div class="login-display">
-    <form class="login-form" @submit.prevent="login">
-      <div class="login-form__username">
-        <it-input
-          class="login-form__username--grey-input"
-          type="text"
-          v-model="loginForm.username"
-          placeholder="Username"
-          autocomplete="off"
-          maxlength="20"
-          required="true"
-        />
-      </div>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet"
+  />
 
-      <div class="login-form__password">
-        <it-input
-          class="login-form__password login-form__password--input"
-          type="password"
-          v-model="loginForm.password"
-          placeholder="Password"
-          autocomplete="off"
-          maxlength="20"
-          required="true"
-        />
+  <div class="create-QR">
+    <form @submit.prevent="createQR()" class="create-QR__form">
+      <div class="create-QR__form--input">
+        <it-input v-model="createQRForm.QR_data" placeholder="URL" />
+        <it-input v-model="createQRForm.QR_size" placeholder="URL" />
       </div>
-      <div class="login-form__credentials-error">
-        <p class="login-form__credentials-error--msg">{{ errorDisplay }}</p>
-      </div>
-
-      <div class="login-form__login-button">
-        <it-button type="success" v-if="!isLoading" class="login-form__login-button--green">Log in</it-button>
-        <it-button
-          v-else
-          type="success"
-          class="login-form__login-button--loading"
-          loading
-          disabled
-        >Loading...</it-button>
-      </div>
+      <it-button class="create-QR__form--btn" type="success" outlined>Create QR</it-button>
     </form>
-
-    <it-divider></it-divider>
-
-    <div class="create-account">
-      <div class="create-account__question">
-        <p class="create-account__question--txt">Don't have an account yet?</p>
-      </div>
-
-      <div class="create-account__link">
-        <router-link class="create-account__link--txt" to="/new">
-          <it-button class="create-account__link--btn" type="black" outlined>Create an account</it-button>
-        </router-link>
-      </div>
+    <div class="create-QR__img">
+      <img class="create-QR__img--small" src="../assets/graphics/logo.png" />
     </div>
+
+    <it-divider />
+
+    <it-collapse>
+      <it-collapse-item title="My QR Codes">
+        <div class="view-QR--space-between">
+          <p class="view-QR__link--center">LINK GOES HERE</p>
+          <it-dropdown>
+            <it-button>...</it-button>
+            <template #menu>
+              <it-dropdown-menu slot="menu">
+                <it-dropdown-item class="view-QR__btn--hover-red">Delete</it-dropdown-item>
+              </it-dropdown-menu>
+            </template>
+          </it-dropdown>
+        </div>
+      </it-collapse-item>
+    </it-collapse>
   </div>
+  <p>{{ QRCodes }}</p>
+  <p>QR Image:{{ QRImage }}</p>
 </template>
 
 <style scoped lang="scss">
-.login-form {
-  &__username {
-    margin-bottom: 1vh;
-  }
-  &__password {
-    margin-bottom: 1vh;
-  }
-  &__login-button {
-    &--green {
+.create-QR {
+  margin-top: 10vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  &__form {
+    display: flex;
+    flex-direction: row;
+    &--input {
       width: 100%;
+      margin-right: 10px;
     }
-    &--loading {
-      width: 100%;
+    &--btn {
+      width: 10%;
+      // width: 100%;
     }
   }
-  &__credentials-error {
-    height: 23px;
-    &--msg {
-      font-style: italic;
-      color: red;
+  &__img {
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    &--small {
+      width: 300px;
+      height: 100%;
     }
   }
 }
 
-.create-account {
-  text-align: center;
+.view-QR {
   &__link {
-    &--btn {
-      margin-top: 1vh;
-      width: 100%;
+    &--center {
+      display: flex;
+      align-items: center;
     }
   }
+  &--space-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  &__btn {
+    &--hover-red {
+      &:hover {
+        background-color: #f93155;
+      }
+    }
+  }
+}
+
+.test {
+  padding: 0px;
 }
 </style>

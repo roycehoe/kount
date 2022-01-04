@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import { getAssetUrl } from '@/services/assets';
 
-function hello() {
-  return "hello"
-}
 
 </script>
 
