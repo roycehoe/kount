@@ -40,7 +40,7 @@ async function login(): Promise<void> {
     <form class="login-form" @submit.prevent="login">
       <div class="login-form__username">
         <input
-          class="login-form__username--grey-input"
+          class="login-form__username--grey-input appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
           type="text"
           v-model="loginForm.username"
           placeholder="Username"
@@ -52,7 +52,7 @@ async function login(): Promise<void> {
 
       <div class="login-form__password">
         <input
-          class="login-form__password login-form__password--input"
+          class="login-form__password login-form__password--input appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
           type="password"
           v-model="loginForm.password"
           placeholder="Password"
@@ -61,8 +61,8 @@ async function login(): Promise<void> {
           required="true"
         />
       </div>
-      <div class="login-form__credentials-error">
-        <p class="login-form__credentials-error--msg">{{ errorDisplay }}</p>
+      <div class="login-form__credentials-error m-1">
+        <p class="login-form__credentials-error--msg">{{ errorDisplay }}placeholder</p>
       </div>
 
       <div
@@ -79,12 +79,12 @@ async function login(): Promise<void> {
     </form>
 
     <div class="create-account">
-      <div class="create-account__question">
+      <div class="create-account__question m-3">
         <p class="create-account__question--txt">Don't have an account yet?</p>
       </div>
 
       <div
-        class="create-account__link inline-flex items-center justify-center py-1 border border-transparent text-base font-medium rounded-sm text-white hover:bg-green-600 bg-green-500 w-full cursor-pointer"
+        class="create-account__link inline-flex items-center justify-center py-1 border border-gray-300 text-base font-medium rounded-sm text-black hover:bg-neutral-100 bg-neutral-50 w-full cursor-pointer"
       >
         <router-link class="create-account__link--txt" to="/new">
           <button class="create-account__link--btn font-semibold">Create an account</button>
