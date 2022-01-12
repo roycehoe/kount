@@ -9,7 +9,4 @@ import { getAssetUrl } from './services/assets';
 
 
 <style lang="scss">
-a {
-  text-decoration: none;
-}
 </style>

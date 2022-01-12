@@ -62,11 +62,11 @@ async function login(): Promise<void> {
         />
       </div>
       <div class="login-form__credentials-error m-1">
-        <p class="login-form__credentials-error--msg">{{ errorDisplay }}placeholder</p>
+        <p class="text-red-500 italic">{{ errorDisplay }}placeholder</p>
       </div>
 
       <div
-        class="login-form__login-button inline-flex items-center justify-center py-1 border border-transparent text-base rounded-sm text-white hover:bg-green-600 bg-green-500 w-full cursor-pointer"
+        class="login-form__login-button inline-flex items-center justify-center py-1 border border-transparent text-base rounded-sm text-white hover:bg-opacity-100 bg-opacity-90 bg-green-500 w-full cursor-pointer border-gray-300"
       >
         <button v-if="!isLoading" class="login-form__login-button--green font-semibold">Log in</button>
         <button

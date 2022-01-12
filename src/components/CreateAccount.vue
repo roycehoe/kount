@@ -42,9 +42,9 @@ async function createAccount(): Promise<void> {
 <template>
   <form class="create-account-form" v-if="!accountCreated" @submit.prevent="createAccount">
     <div class="create-account-form__input">
-      <div class="create-account-form__input--margin">
-        <it-input
-          class="create-account-form__input--username"
+      <div class="my-2">
+        <input
+          class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
           type="text"
           v-model="newUserForm.username"
           placeholder="New Username"
@@ -54,9 +54,9 @@ async function createAccount(): Promise<void> {
         />
       </div>
 
-      <div class="create-account-form__input--margin">
-        <it-input
-          class="create-account-form__input--password"
+      <div class="my-2">
+        <input
+          class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
           type="password"
           v-model="newUserForm.password"
           placeholder="Password"
@@ -66,9 +66,9 @@ async function createAccount(): Promise<void> {
         />
       </div>
 
-      <div class="create-account-form__input--margin">
-        <it-input
-          class="create-account-form__input--confirm-password"
+      <div class="my-2">
+        <input
+          class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
           type="password"
           v-model="newUserForm.confirmPassword"
           placeholder="Confirm Password"
@@ -79,28 +79,28 @@ async function createAccount(): Promise<void> {
       </div>
     </div>
 
-    <div class="create-account-form__submission-error">
-      <p class="create-account-form__submission-error--msg">{{ errorDisplay }}</p>
+    <div class="mb-5">
+      <p class="text-red-500 italic">{{ errorDisplay }} placeholder</p>
     </div>
 
-    <div class="create-account-form__btn">
-      <it-button v-if="!isLoading" class="create-account-form__btn--green" type="success">
+    <div
+      class="login-form__login-button inline-flex items-center justify-center py-1 border border-transparent text-base rounded-sm text-white hover:bg-opacity-100 bg-opacity-90 bg-green-500 w-full cursor-pointer border-gray-300"
+    >
+      <button v-if="!isLoading" class="font-semibold">
         <p class="create-account-form__btn__txt">Create Account</p>
-      </it-button>
+      </button>
 
-      <it-button v-else class="create-account-form__btn--loading" type="submit">
+      <button v-else class="font-semibold" type="submit">
         <p class="create-account-form__btn__txt">Loading...</p>
-      </it-button>
+      </button>
     </div>
 
-    <it-button
-      class="create-account-form__btn--grey"
+    <button
       @click="$router.push('/')"
-      type="black"
-      outlined
+      class="create-account__link inline-flex items-center justify-center py-1 border border-gray-300 text-base font-medium rounded-sm text-black hover:bg-neutral-100 bg-neutral-50 w-full cursor-pointer my-4"
     >
       <p class="create-account-form__btn__txt">Return to Main Menu</p>
-    </it-button>
+    </button>
   </form>
 
   <div class="createAccountSuccess" v-else>
