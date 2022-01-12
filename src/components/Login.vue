@@ -39,7 +39,7 @@ async function login(): Promise<void> {
   <div class="login-display">
     <form class="login-form" @submit.prevent="login">
       <div class="login-form__username">
-        <it-input
+        <input
           class="login-form__username--grey-input"
           type="text"
           v-model="loginForm.username"
@@ -51,7 +51,7 @@ async function login(): Promise<void> {
       </div>
 
       <div class="login-form__password">
-        <it-input
+        <input
           class="login-form__password login-form__password--input"
           type="password"
           v-model="loginForm.password"
@@ -65,28 +65,29 @@ async function login(): Promise<void> {
         <p class="login-form__credentials-error--msg">{{ errorDisplay }}</p>
       </div>
 
-      <div class="login-form__login-button">
-        <it-button type="success" v-if="!isLoading" class="login-form__login-button--green">Log in</it-button>
-        <it-button
+      <div
+        class="login-form__login-button inline-flex items-center justify-center py-1 border border-transparent text-base rounded-sm text-white hover:bg-green-600 bg-green-500 w-full cursor-pointer"
+      >
+        <button v-if="!isLoading" class="login-form__login-button--green font-semibold">Log in</button>
+        <button
           v-else
-          type="success"
-          class="login-form__login-button--loading"
+          class="login-form__login-button--loading font-semibold"
           loading
           disabled
-        >Loading...</it-button>
+        >Loading...</button>
       </div>
     </form>
-
-    <it-divider></it-divider>
 
     <div class="create-account">
       <div class="create-account__question">
         <p class="create-account__question--txt">Don't have an account yet?</p>
       </div>
 
-      <div class="create-account__link">
+      <div
+        class="create-account__link inline-flex items-center justify-center py-1 border border-transparent text-base font-medium rounded-sm text-white hover:bg-green-600 bg-green-500 w-full cursor-pointer"
+      >
         <router-link class="create-account__link--txt" to="/new">
-          <it-button class="create-account__link--btn" type="black" outlined>Create an account</it-button>
+          <button class="create-account__link--btn font-semibold">Create an account</button>
         </router-link>
       </div>
     </div>
@@ -120,11 +121,5 @@ async function login(): Promise<void> {
 
 .create-account {
   text-align: center;
-  &__link {
-    &--btn {
-      margin-top: 1vh;
-      width: 100%;
-    }
-  }
 }
 </style>
