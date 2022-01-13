@@ -3,13 +3,10 @@ import { client } from "@/services"
 import { ErrorCode, getErrorCode } from "@/services/errors";
 
 
-export interface CreateSurveyQuestion {
-    title: string
-}
 
 export interface CreateSurveyRequest {
     title: string
-    questions: Array<CreateSurveyQuestion>
+    questions: Array<string>
 }
 
 export interface CreateSurveyResponse {

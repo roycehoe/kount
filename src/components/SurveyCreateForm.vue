@@ -46,7 +46,7 @@ async function createSurvey(): Promise<void> {
 
     <button
         class="hover:bg-neutral-100 flex flex-row my-5"
-        @click="createSurveyForm.questions.push({ title: createQuestionForm.title })"
+        @click="createSurveyForm.questions.push(createQuestionForm.title)"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@ async function createSurvey(): Promise<void> {
     </button>
     <div class="divider"></div>
     <p>Question list</p>
-    <li v-for="question in createSurveyForm.questions" :key="question.title">{{ question.title }}</li>
+    <li v-for="question in createSurveyForm.questions" :key="question">{{ question }}</li>
 
     <div class="divider"></div>
 
