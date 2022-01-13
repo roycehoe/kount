@@ -4,6 +4,7 @@ const isAddQuestion = ref(true)
 const questionOptions = ref([] as Array<any>)
 const questionTitle = ref("")
 const questionType = ref("Text")
+const questionCount = ref(0)
 
 function addOption() {
     questionOptions.value.push({ option: '' })
@@ -25,7 +26,7 @@ function removeOption() {
 
     <div class="divider"></div>
 
-    <div v-if="isAddQuestion" class="flex flex-col">
+    <div v-if="isAddQuestion" class="flex flex-col" v-for="n in questionCount">
         <div class="tabs">
             <button class="tab tab-bordered" @click="questionType = 'Text'">Text</button>
             <button
@@ -57,7 +58,7 @@ function removeOption() {
         </div>
     </div>
 
-    <!-- <button class="hover:bg-neutral-100 flex flex-row my-5" @click="isAddQuestion = !isAddQuestion">
+    <button class="hover:bg-neutral-100 flex flex-row my-5" @click="questionCount += 1">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -73,7 +74,24 @@ function removeOption() {
             />
         </svg>
         <p>Add question</p>
-    </button>-->
+    </button>
+    <button class="hover:bg-neutral-100 flex flex-row my-5" @click="questionCount -= 1">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="{2}"
+                d="M12 4v16m8-8H4"
+            />
+        </svg>
+        <p>Remove question</p>
+    </button>
     <div class="divider"></div>
 
     <div>
