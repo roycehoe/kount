@@ -89,7 +89,6 @@ async function createSurvey(): Promise<void> {
             class="bg-green-500 mw-2 w-full h-10 rounded-md hover:bg-green-600 my-3"
         >Create Survey</button>
     </div>
-    <p>survey form {{ createSurveyForm }}</p>
 </template>
 
 <style scoped lang="scss">

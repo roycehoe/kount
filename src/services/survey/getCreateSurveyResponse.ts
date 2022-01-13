@@ -1,7 +1,6 @@
 import { Ok, Err, Result } from "ts-results"
 import { client } from "@/services"
 import { ErrorCode, getErrorCode } from "@/services/errors";
-import internal from "stream";
 
 
 export interface CreateSurveyQuestion {
@@ -13,7 +12,7 @@ export interface CreateSurveyRequest {
     questions: Array<CreateSurveyQuestion>
 }
 
-interface CreateSurveyResponse {
+export interface CreateSurveyResponse {
     user_id: number
     created_at: Float32Array
     name: string
