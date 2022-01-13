@@ -20,7 +20,7 @@ async function login(): Promise<void> {
     localStorage.removeItem("token");
     localStorage.setItem("token", token);
     router.push({
-      path: '/QR',
+      path: '/dashboard',
     })
     return;
   }
@@ -62,7 +62,7 @@ async function login(): Promise<void> {
         />
       </div>
       <div class="login-form__credentials-error m-1">
-        <p class="text-red-500 italic">{{ errorDisplay }}placeholder</p>
+        <p class="text-red-500 italic">{{ errorDisplay }}</p>
       </div>
 
       <div

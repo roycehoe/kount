@@ -14,7 +14,8 @@ export interface CreateUserResponse {
 
 export async function getCreateUserResponse(newUserData: CreateUserRequest): Promise<Result<CreateUserResponse, ErrorCode>> {
     try {
-        const response = await client.post("/user/new", newUserData);
+        const response = await client.post("/user", newUserData);
+        console.log(response.data)
         return Ok(response.data as CreateUserResponse)
     }
     catch (error) {

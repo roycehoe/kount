@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
 import CreateAccount from '@/components/CreateAccount.vue'
 import Login from '@/components/Login.vue'
-import QR from '@/components/QR.vue'
+import Dashboard from '@/components/Dashboard.vue'
 
 
 const routes = [
@@ -24,11 +24,11 @@ const routes = [
         ]
     },
     {
-        path: '/QR',
-        name: "QR",
-        component: QR,
+        path: '/dashboard',
+        name: "Dashboard",
+        component: Dashboard,
         meta: {
-            requiresAuth: true
+            // requiresAuth: true
         }
     },
 ]

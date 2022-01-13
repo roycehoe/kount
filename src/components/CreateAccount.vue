@@ -6,7 +6,7 @@ import { CreateUserRequest, getCreateUserResponse } from "@/services/user/getCre
 const newUserForm = ref({} as CreateUserForm);
 const errorDisplay = ref("");
 const isLoading = ref(false)
-const accountCreated = ref(false);
+const accountCreated = ref(true);
 
 interface CreateUserForm extends CreateUserRequest {
   confirmPassword: string;
@@ -80,7 +80,7 @@ async function createAccount(): Promise<void> {
     </div>
 
     <div class="mb-5">
-      <p class="text-red-500 italic">{{ errorDisplay }} placeholder</p>
+      <p class="text-red-500 italic">{{ errorDisplay }}</p>
     </div>
 
     <div
@@ -104,8 +104,12 @@ async function createAccount(): Promise<void> {
   </form>
 
   <div class="createAccountSuccess" v-else>
-    <p class="createAccountSuccess__txt">Account successfully created</p>
-    <button class="createAccountForm__btn--grey" @click="$router.push('/')" type="button">
+    <p class="text-center font-semibold">Account successfully created</p>
+    <button
+      class="create-account__link inline-flex items-center justify-center py-1 border border-gray-300 text-base font-medium rounded-sm text-black hover:bg-neutral-100 bg-neutral-50 w-full cursor-pointer my-4"
+      @click="$router.push('/')"
+      type="button"
+    >
       <p class="createAccountForm__btn__txt">Return to Main Menu</p>
     </button>
   </div>
