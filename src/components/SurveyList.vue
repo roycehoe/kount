@@ -1,4 +1,5 @@
 <script lang="ts" setup>import { getDashboardDisplayResponse, GetDashboardDisplayResponse } from '@/services/survey/getDashboardDisplayResponse';
+import { getDeleteSurveyResponse } from '@/services/survey/getDeleteSurveyResponse';
 import { onBeforeMount, ref } from 'vue';
 
 
@@ -11,11 +12,18 @@ async function copyToClipboard(text: string) {
     alert('Link coppied');
 }
 
+
 async function showDashboardInfo() {
     const { ok: isSuccessful, val: response } = await getDashboardDisplayResponse()
     if (isSuccessful) {
         dashboardInfo.value = response as GetDashboardDisplayResponse
     }
+    // to implement error handling
+}
+
+async function deleteSurvey(surveyId: number) {
+    const { ok: isSuccessful, val: response } = await getDeleteSurveyResponse({ survey_id: surveyId })
+    await showDashboardInfo()
     // to implement error handling
 }
 
@@ -27,11 +35,10 @@ onBeforeMount(async () => await showDashboardInfo());
 
 
 <template>
-    <p>{{ dashboardInfo }}</p>
-    <div v-for="surveys in dashboardInfo">
+    <div v-for="survey in dashboardInfo">
         <div class="survey bg-neutral-100 rounded-md flex flex-row justify-between m-2 bg-gray-50">
             <div class="flex items-center">
-                <p class="m-3">{{ surveys.title }}</p>
+                <p class="m-3">{{ survey.title }}</p>
                 <button class="m-2" @click="copyToClipboard(surveyLink)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +57,10 @@ onBeforeMount(async () => await showDashboardInfo());
 
             <div class="flex items-center">
                 <button class="bg-green-500 m-2 w-16 h-8 rounded-md hover:bg-green-600">View</button>
-                <button class="bg-red-500 m-2 w-16 h-8 rounded-md hover:bg-red-600">Delete</button>
+                <button
+                    class="bg-red-500 m-2 w-16 h-8 rounded-md hover:bg-red-600"
+                    @click="deleteSurvey(survey.id)"
+                >Delete</button>
             </div>
         </div>
     </div>

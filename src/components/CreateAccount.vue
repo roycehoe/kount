@@ -6,7 +6,7 @@ import { CreateUserRequest, getCreateUserResponse } from "@/services/user/getCre
 const newUserForm = ref({} as CreateUserForm);
 const errorDisplay = ref("");
 const isLoading = ref(false)
-const accountCreated = ref(true);
+const accountCreated = ref(false);
 
 interface CreateUserForm extends CreateUserRequest {
   confirmPassword: string;

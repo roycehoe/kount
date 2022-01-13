@@ -7,6 +7,7 @@ const createQuestionForm = ref({
 } as CreateSurveyQuestion)
 
 
+
 async function createSurvey(): Promise<void> {
     const { ok: isSuccessful, val: response } = await getCreateSurveyResponse(createSurveyForm.value)
     //To add in error handling here
@@ -17,6 +18,8 @@ async function createSurvey(): Promise<void> {
 </script>
 
 <template>
+    <p>create question form{{ createQuestionForm }}</p>
+    <p>create survey form{{ createSurveyForm }}</p>
     <div class="form-control">
         <label class="label">
             <span class="label-text font-bold">New survey name</span>
@@ -85,7 +88,7 @@ async function createSurvey(): Promise<void> {
 
     <div>
         <button
-            @click="createSurvey"
+            @click="createSurvey(), window.location.reload()"
             class="bg-green-500 mw-2 w-full h-10 rounded-md hover:bg-green-600 my-3"
         >Create Survey</button>
     </div>
