@@ -1,4 +1,6 @@
 <script lang="ts" setup>import { ref } from 'vue';
+import Inputs from './QuestionTypes/Inputs.vue';
+import MultipleChoices from './QuestionTypes/MultipleChoices.vue';
 
 
 const isAddQuestion = ref(false)
