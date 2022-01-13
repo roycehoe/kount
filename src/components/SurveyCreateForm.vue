@@ -1,10 +1,6 @@
 <script lang="ts" setup>import { ref } from 'vue';
-import Inputs from './QuestionTypes/Inputs.vue';
-import MultipleChoices from './QuestionTypes/MultipleChoices.vue';
-
 
 const isAddQuestion = ref(false)
-const questionType = ref("")
 
 </script>
 
@@ -15,37 +11,11 @@ const questionType = ref("")
         </label>
         <input type="text" placeholder="Name" class="input input-bordered" />
     </div>
+
     <div v-if="isAddQuestion">
         <span class="label-text font-bold">Question type</span>
-        <div class="p-6 card bordered">
-            <div class="form-control">
-                <label class="cursor-pointer label">
-                    <span class="label-text">Input</span>
-                    <input
-                        type="radio"
-                        name="opt"
-                        class="radio"
-                        value
-                        @click="questionType = 'Input'"
-                    />
-                </label>
-            </div>
-            <div class="form-control">
-                <label class="cursor-pointer label">
-                    <span class="label-text">Multiple choice</span>
-                    <input
-                        type="radio"
-                        name="opt"
-                        class="radio"
-                        value
-                        @click="questionType = 'Multiple choice'"
-                    />
-                </label>
-            </div>
-        </div>
     </div>
-    <Inputs v-if="questionType === 'Input'"></Inputs>
-    <MultipleChoices v-if="questionType === 'Multiple choice'"></MultipleChoices>
+
     <button class="hover:bg-neutral-100 flex flex-row my-5" @click="isAddQuestion = !isAddQuestion">
         <svg
             xmlns="http://www.w3.org/2000/svg"

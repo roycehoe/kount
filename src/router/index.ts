@@ -3,6 +3,7 @@ import Home from '@/views/Home.vue'
 import CreateAccount from '@/components/CreateAccount.vue'
 import Login from '@/components/Login.vue'
 import Dashboard from '@/views/Dashboard.vue'
+import HelloWorld from '@/components/HelloWorld.vue'
 
 
 const routes = [
@@ -30,6 +31,11 @@ const routes = [
         meta: {
             // requiresAuth: true
         }
+    },
+    {
+        path: '/hello-world',
+        name: "HelloWorld",
+        component: HelloWorld,
     },
 ]
 
