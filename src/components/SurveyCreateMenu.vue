@@ -1,22 +1,8 @@
 <script lang="ts" setup>
-import { getDashboardDisplayResponse, GetDashboardDisplayResponse } from '@/services/survey/getDashboardDisplayResponse';
-import { onBeforeMount, ref } from 'vue';
-import Inputs from './QuestionTypes/Inputs.vue';
-import MultipleChoices from './QuestionTypes/MultipleChoices.vue';
+import { ref } from 'vue';
 import SurveyCreateForm from './SurveyCreateForm.vue';
 
 const isCreateSurvey = ref(false)
-const dashboardInfo = ref({} as GetDashboardDisplayResponse)
-
-async function showDashboardInfo() {
-    const { ok: isSuccessful, val: response } = await getDashboardDisplayResponse()
-    if (isSuccessful) {
-        dashboardInfo.value = response as GetDashboardDisplayResponse
-    }
-    // to implement error handling
-}
-
-onBeforeMount(async () => await showDashboardInfo());
 </script>
 
 <template>
@@ -46,7 +32,6 @@ onBeforeMount(async () => await showDashboardInfo());
             >Exit</button>
         </div>
     </div>
-    <p>{{ dashboardInfo }}</p>
 </template>
 
 <style scoped lang="scss">
