@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "daisyui": "^1.22.2",
     "dotenv": "^10.0.0",
     "nginx": "^1.0.3",
+    "nodejs": "^0.0.0",
     "sass": "^1.43.4",
     "scss": "^0.2.4",
     "ts-results": "^3.3.0",
