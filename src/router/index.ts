@@ -4,6 +4,7 @@ import CreateAccount from '@/components/CreateAccount.vue'
 import Login from '@/components/Login.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import HelloWorld from '@/components/HelloWorld.vue'
+import Survey from '@/views/Survey.vue'
 
 
 const routes = [
@@ -36,6 +37,11 @@ const routes = [
         path: '/hello-world',
         name: "HelloWorld",
         component: HelloWorld,
+    },
+    {
+        path: '/survey',
+        name: "Survey",
+        component: Survey,
     },
 ]
 

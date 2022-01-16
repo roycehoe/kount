@@ -7,11 +7,7 @@ import { getAssetUrl } from '@/services/assets';
 <template>
   <div class="display">
     <div class="display--flexboxColumn display--onGrid">
-      <div class="logo">
-        <img class="logo--smallImg" src="../assets/graphics/logo.png" />
-      </div>
-
-      <div class="display--inputBox">
+      <div class="display--inputBox mt-40">
         <router-view></router-view>
       </div>
     </div>

@@ -15,7 +15,7 @@ import SurveyCreateMenu from '@/components/SurveyCreateMenu.vue';
     <div>
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <SurveyCreateMenu></SurveyCreateMenu>
-        <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 mt-10">
+        <div class="border-4 border-dashed border-gray-200 rounded-lg min-h-16 h-max mt-10">
           <SurveyList></SurveyList>
         </div>
       </div>
