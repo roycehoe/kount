@@ -2,17 +2,19 @@
 import { ref } from 'vue';
 import PlusIcon from './Icons/PlusIcon.vue';
 import MinusIcon from './Icons/MinusIcon.vue';
-import internal from 'stream';
+import { getSeconds } from '@/services/survey/convertTime';
+import { client } from '@/services';
+import { CreateTimerRequest, getCreateTimerResponse } from '@/services/survey/getCreateTimerResponse';
 
 
-const DEFAULT_CREATE_TIMER_FORM = {
+const DEFAULT_CREATE_TIMER_FORM_DISPLAY = {
   title: "",
   hours: 0,
   minutes: 15,
   seconds: 0
 }
 
-interface getCreateTimerResponse {
+interface CreateTimerDisplay {
   title: string
   hours: number
   minutes: number
@@ -20,10 +22,21 @@ interface getCreateTimerResponse {
 }
 
 const isCreateTimer = ref(false)
-const createTimerForm = ref(DEFAULT_CREATE_TIMER_FORM as getCreateTimerResponse)
+const createTimerFormDisplay = ref(DEFAULT_CREATE_TIMER_FORM_DISPLAY as CreateTimerDisplay)
 
-const test = 10 as number
+function getCreateTimerSeconds() {
+  return getSeconds(createTimerFormDisplay.value.hours, createTimerFormDisplay.value.minutes, createTimerFormDisplay.value.seconds)
+  //please refactor this
+}
 
+async function createTimer() {
+  const { ok: isSuccessful, val: response } = await getCreateTimerResponse({ title: createTimerFormDisplay.value.title, time: getCreateTimerSeconds() } as CreateTimerRequest)
+  if (isSuccessful) {
+    location.reload()
+    return
+  }
+  console.log(response)
+}
 
 
 </script>
@@ -43,7 +56,7 @@ const test = 10 as number
         type="text"
         placeholder="Timer name"
         class="input input-bordered"
-        v-model="createTimerForm.title"
+        v-model="createTimerFormDisplay.title"
       />
     </div>
     <div class="divider"></div>
@@ -51,29 +64,33 @@ const test = 10 as number
     <div class="timer-form flex justify-between">
       <div class="timer-form--selection flex">
         <div class="timer-form--inputs">
-          <input type="range" max="23" class="range" v-model="createTimerForm.hours" />
-          <input type="range" max="59" class="range" v-model="createTimerForm.minutes" />
-          <input type="range" max="59" class="range" v-model="createTimerForm.seconds" />
+          <input type="range" max="23" class="range" v-model="createTimerFormDisplay.hours" />
+          <input type="range" max="59" class="range" v-model="createTimerFormDisplay.minutes" />
+          <input type="range" max="59" class="range" v-model="createTimerFormDisplay.seconds" />
           <!-- note to self - set default value  -->
         </div>
 
         <div class="timer-form--display grid grid-flow-col gap-5 text-center auto-cols-max ml-10">
           <div class="flex flex-col">
-            <p class="font-mono text-5xl">{{ createTimerForm.hours }}</p>
+            <p class="font-mono text-5xl">{{ createTimerFormDisplay.hours }}</p>
             <p>hours</p>
           </div>
           <div class="flex flex-col">
-            <p class="font-mono text-5xl">{{ createTimerForm.minutes }}</p>
+            <p class="font-mono text-5xl">{{ createTimerFormDisplay.minutes }}</p>
             <p>minutes</p>
           </div>
           <div class="flex flex-col">
-            <p class="font-mono text-5xl">{{ createTimerForm.seconds }}</p>
+            <p class="font-mono text-5xl">{{ createTimerFormDisplay.seconds }}</p>
             <p>seconds</p>
           </div>
         </div>
       </div>
       <div class="timer-form--buttons flex items-center">
-        <button class="btn btn-success bg-green-500 border-none hover:bg-green-600">Create Timer</button>
+        <button
+          @click="createTimer"
+          class="btn btn-success bg-green-500 border-none hover:bg-green-600"
+          :class="{ 'btn-disabled bg-slate-400': !createTimerFormDisplay.title || !getCreateTimerSeconds() }"
+        >Create Timer</button>
       </div>
     </div>
   </div>

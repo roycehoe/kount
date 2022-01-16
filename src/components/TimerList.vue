@@ -1,4 +1,5 @@
-<script lang="ts" setup>import { CreateTimerResponse } from '@/services/survey/getCreateTimerResponse';
+<script lang="ts" setup>import { showHours, showMinutes, showSeconds } from '@/services/survey/convertTime';
+import { CreateTimerResponse } from '@/services/survey/getCreateTimerResponse';
 import { getDashboardDisplayResponse } from '@/services/survey/getDashboardDisplayResponse';
 import { DeleteTimerRequest, getDeleteTimerResponse } from '@/services/survey/getDeleteTimerResponse';
 import { onBeforeMount, ref } from 'vue';
@@ -25,18 +26,6 @@ async function deleteTimer(timerId: number) {
 }
 
 
-function showHours(seconds: number) {
-  return Math.floor(seconds / 3600) % 24
-}
-
-function showMinutes(seconds: number) {
-  return Math.floor(seconds / 60) % 60
-}
-
-function showSeconds(seconds: number) {
-  return Math.floor(seconds) % 60
-}
-
 
 onBeforeMount(async () => await showDashboardInfo());
 
@@ -48,14 +37,14 @@ onBeforeMount(async () => await showDashboardInfo());
     <div class="survey bg-neutral-100 rounded-md flex flex-row justify-between m-2 bg-gray-50">
       <div class="flex items-center">
         <p class="m-3 font-bold">{{ info.title }}</p>
-        <kbd class="kbd font-mono ml-12">
+      </div>
+
+      <div class="flex items-center">
+        <kbd class="kbd font-mono mr-36">
           <p>{{ showHours(info.time) }}h:</p>
           <p>{{ showMinutes(info.time) }}m:</p>
           <p>{{ showSeconds(info.time) }}s</p>
         </kbd>
-      </div>
-
-      <div class="flex items-center">
         <button
           class="btn btn-success bg-green-500 m-1 w-16 h-8 rounded-md hover:bg-green-600 border-none min-h-0"
         >View</button>

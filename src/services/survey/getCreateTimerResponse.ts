@@ -16,7 +16,7 @@ export interface CreateTimerResponse {
     time: number
 }
 
-export async function getCreateSurveyResponse(createTimerForm: CreateTimerRequest): Promise<Result<CreateTimerResponse, ErrorCode>> {
+export async function getCreateTimerResponse(createTimerForm: CreateTimerRequest): Promise<Result<CreateTimerResponse, ErrorCode>> {
     try {
         const response = await client.post("/timer", createTimerForm);
         return Ok(response.data as CreateTimerResponse)
