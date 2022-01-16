@@ -73,7 +73,7 @@ const test = 10 as number
         </div>
       </div>
       <div class="timer-form--buttons flex items-center">
-        <button class="btn btn-success">Create Timer</button>
+        <button class="btn btn-success bg-green-500 border-none hover:bg-green-600">Create Timer</button>
       </div>
     </div>
   </div>

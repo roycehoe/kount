@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import SurveyList from '@/components/SurveyList.vue';
+import TimerList from '@/components/TimerList.vue';
 import { ref } from 'vue';
-import SurveyCreateMenu from '@/components/SurveyCreateMenu.vue';
+import TimerCreate from '@/components/TimerCreate.vue';
+import Countdown from '@/components/Countdown.vue';
 
 </script>
 
@@ -14,9 +15,12 @@ import SurveyCreateMenu from '@/components/SurveyCreateMenu.vue';
     </div>
     <div>
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <SurveyCreateMenu></SurveyCreateMenu>
+        <div class="border-4 border-dashed border-gray-200 rounded-lg min-h-16 h-max my-10">
+          <Countdown></Countdown>
+        </div>
+        <TimerCreate></TimerCreate>
         <div class="border-4 border-dashed border-gray-200 rounded-lg min-h-16 h-max mt-10">
-          <SurveyList></SurveyList>
+          <TimerList></TimerList>
         </div>
       </div>
     </div>
