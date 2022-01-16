@@ -1,17 +1,13 @@
 import { Ok, Err, Result } from "ts-results"
 import { client } from "@/services"
 import { ErrorCode, getErrorCode } from "@/services/errors";
-import { CreateSurveyResponse } from "./getCreateSurveyResponse";
-
-export interface GetDashboardDisplayResponse {
-    dashboardDisplay: Array<CreateSurveyResponse>
-}
+import { CreateTimerResponse } from "./getCreateTimerResponse";
 
 
-export async function getDashboardDisplayResponse(): Promise<Result<GetDashboardDisplayResponse, ErrorCode>> {
+export async function getDashboardDisplayResponse(): Promise<Result<Array<CreateTimerResponse>, ErrorCode>> {
     try {
-        const response = await client.get("/survey");
-        return Ok(response.data as GetDashboardDisplayResponse)
+        const response = await client.get("/timer");
+        return Ok(response.data as Array<CreateTimerResponse>)
     }
     catch (error) {
         return Err(getErrorCode(error))
