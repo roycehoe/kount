@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 interface getCreateTimerResponse {
   title: string
-  totalSeconds: number
+  totalSeconds: number //need two variables like time left and total time
 }
 
 interface GetTimerDisplay {
@@ -17,7 +17,7 @@ interface GetTimerDisplay {
 
 const timerResponse = ref({
   title: "placeholder",
-  totalSeconds: 3
+  totalSeconds: 30
 } as getCreateTimerResponse)
 
 const timerDisplay = ref({
@@ -25,27 +25,35 @@ const timerDisplay = ref({
 
 
 const isPaused = ref(false)
+const isTimerStarted = ref(false)
 
 function setTimer() {
+  timerDisplay.value.title = timerResponse.value.title;
   timerDisplay.value.hours = Math.floor(timerResponse.value.totalSeconds / 3600) % 24;
   timerDisplay.value.minutes = Math.floor(timerResponse.value.totalSeconds / 60) % 60;
   timerDisplay.value.seconds = Math.floor(timerResponse.value.totalSeconds) % 60;
 }
 
 function startCountdown() {
-  const countdown = setInterval(() => {
+  isPaused.value = false
+  isTimerStarted.value = true
+  const placeholder = setInterval(() => {
+    if (timerResponse.value.totalSeconds < 0) {
+      clearInterval(placeholder)
+      timerResponse.value.totalSeconds = 0
+      setTimer()
+      return
+    }
+    if (isPaused.value) {
+      clearInterval(placeholder)
+      setTimer()
+      return
+    }
     timerResponse.value.totalSeconds -= 1
     setTimer()
   }, 1000)
-  if (timerResponse.value.totalSeconds == 0) {
-    clearInterval(countdown)
-    timerResponse.value.totalSeconds = 0
-    setTimer()
-  }
 }
 
-function stopCountdown() {
-}
 
 function resetCountdown() {
 }
@@ -85,8 +93,8 @@ setTimer()
       <div class="timer-buttons flex flex-row justify-evenly mt-8">
         <button
           class="btn btn-success bg-green-500 m-1 w-32 h-16 rounded-md hover:bg-green-600 border-none min-h-0"
-          v-if="isPaused"
-          @click="isPaused = false"
+          v-if="isPaused || !isTimerStarted"
+          @click="startCountdown"
         >Start</button>
         <button
           class="btn btn-success bg-blue-500 m-1 w-32 h-16 rounded-md hover:bg-blue-600 border-none min-h-0"
@@ -95,11 +103,7 @@ setTimer()
         >Pause</button>
         <button
           class="btn btn-success bg-red-500 m-1 w-32 h-16 rounded-md hover:bg-red-600 border-none min-h-0"
-        >Reset</button>
-        <button
-          class="btn btn-success bg-red-500 m-1 w-32 h-16 rounded-md hover:bg-red-600 border-none min-h-0"
-          @click="startCountdown"
-        >TEST BUTTON</button>
+        >Reset - This button actually sends a get request</button>
       </div>
     </div>
   </div>

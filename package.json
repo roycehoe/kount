@@ -16,7 +16,7 @@
     "sass": "^1.43.4",
     "scss": "^0.2.4",
     "ts-results": "^3.3.0",
-    "vue": "^3.2.16",
+    "vue": "^3.2.26",
     "vue-router": "4"
   },
   "devDependencies": {

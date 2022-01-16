@@ -30,10 +30,10 @@ const test = 10 as number
 
 <template>
   <button class="hover:bg-neutral-100 flex flex-row" @click="isCreateTimer = !isCreateTimer">
-    <MinusIcon class="mb-2" v-if="isCreateTimer"></MinusIcon>
-    <div class="flex" v-else>
-      <PlusIcon></PlusIcon>
-      <p class="ml-2">New timer</p>
+    <div class="flex">
+      <MinusIcon class="mb-2" v-if="isCreateTimer"></MinusIcon>
+      <PlusIcon class="mb-2" v-else></PlusIcon>
+      <p class="ml-2">Create a new timer</p>
     </div>
   </button>
 
@@ -51,9 +51,9 @@ const test = 10 as number
     <div class="timer-form flex justify-between">
       <div class="timer-form--selection flex">
         <div class="timer-form--inputs">
-          <input type="range" max="24" class="range" v-model="createTimerForm.hours" />
-          <input type="range" max="60" class="range" v-model="createTimerForm.minutes" />
-          <input type="range" max="60" class="range" v-model="createTimerForm.seconds" />
+          <input type="range" max="23" class="range" v-model="createTimerForm.hours" />
+          <input type="range" max="59" class="range" v-model="createTimerForm.minutes" />
+          <input type="range" max="59" class="range" v-model="createTimerForm.seconds" />
           <!-- note to self - set default value  -->
         </div>
 
