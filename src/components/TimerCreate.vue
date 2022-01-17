@@ -60,7 +60,7 @@ async function createTimer() {
     <div class="timer-form flex justify-between">
       <div class="timer-form--selection flex">
         <div class="timer-form--inputs">
-          <input type="range" max="23" class="range" v-model.number="createTimerFormDisplay.hours" />
+          <input type="range" max="24" class="range" v-model.number="createTimerFormDisplay.hours" />
           <input
             type="range"
             max="59"
