@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getMetricTime, TimerDisplay } from '@/services/timer/convertTime';
-import { onBeforeMount, PropType, ref, toRef, watch } from 'vue';
+import { onBeforeMount, PropType, ref, StyleValue, toRef, watch } from 'vue';
 
 const props = defineProps({
   data: {
@@ -65,6 +65,10 @@ function startCountdown() {
   }, 1000)
 }
 
+function displayTimerMinutes() {
+  return { '--value': timerDisplay.value.minutes } as StyleValue
+}
+
 
 watch(props, () => getTimerDisplay())
 onBeforeMount(async () => updateTimerDisplay());
@@ -73,7 +77,7 @@ onBeforeMount(async () => updateTimerDisplay());
 
 
 <template>
-  <div class="timer-display__centered flex justify-center m-4" v-if="data.id">
+  <div class="timer-display__centered flex justify-center m-4" v-if="data?.id">
     <div class="timer-display flex flex-col">
       <div class="timer__header">
         <p class="text-center font-bold text-4xl max-w-sm">{{ timerDisplay.title }}</p>
@@ -82,19 +86,21 @@ onBeforeMount(async () => updateTimerDisplay());
       <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <span :style="{ '--value': timerDisplay.hours }"></span>
+            <!-- <span :style="{ '--value': timerDisplay.hours }"></span> -->
+            <span :style="{ '--value': timerDisplay.minutes } as StyleValue"></span>
           </span>
           hours
         </div>
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <span :style="{ '--value': timerDisplay.minutes }"></span>
+            <span :style="{ '--value': timerDisplay.minutes } as StyleValue"></span>
+            <span style="--value: 10"></span>
           </span>
           min
         </div>
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <span :style="{ '--value': timerDisplay.seconds }"></span>
+            <span :style="{ '--value': timerDisplay.seconds } as StyleValue"></span>
           </span>
           sec
         </div>

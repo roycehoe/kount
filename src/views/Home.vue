@@ -6,7 +6,7 @@ import { getAssetUrl } from '@/services/assets';
 
 <template>
   <div class="display w-2/12 mt-16 p-2 m-auto">
-    <img src="src/assets/graphics/logo.png" />
+    <img :src="getAssetUrl('graphics', 'logo.png')" />
     <div class="display--inputBox mt-8">
       <router-view></router-view>
     </div>

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import PlusIcon from './Icons/PlusIcon.vue';
 import MinusIcon from './Icons/MinusIcon.vue';
-import { CreateTimerDisplay, getSeconds } from '@/services/timer/convertTime';
+import { CreateTimerDisplay } from '@/services/timer/convertTime';
 import { CreateTimerRequest, getCreateTimerResponse } from '@/services/timer/getCreateTimerResponse';
 
 
