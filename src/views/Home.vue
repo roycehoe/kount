@@ -5,29 +5,13 @@ import { getAssetUrl } from '@/services/assets';
 </script>
 
 <template>
-  <div class="display">
-    <div class="display--flexboxColumn display--onGrid">
-      <div class="display--inputBox mt-40">
-        <router-view></router-view>
-      </div>
+  <div class="display w-2/12 mt-16 p-2 m-auto">
+    <img src="src/assets/graphics/logo.png" />
+    <div class="display--inputBox mt-8">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.logo {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5vh;
-  &--smallImg {
-    width: 200px;
-  }
-}
-
-.display {
-  margin: auto;
-  width: 20%;
-  margin-top: 10vh;
-  padding: 10px;
-}
 </style>

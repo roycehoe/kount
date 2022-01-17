@@ -73,10 +73,10 @@ onBeforeMount(async () => updateTimerDisplay());
 
 
 <template>
-  <div class="timer-display__centered flex justify-center m-4" v-if="data.title">
+  <div class="timer-display__centered flex justify-center m-4" v-if="data.id">
     <div class="timer-display flex flex-col">
       <div class="timer__header">
-        <p class="text-center font-bold text-2xl">{{ timerDisplay.title }}</p>
+        <p class="text-center font-bold text-4xl max-w-sm">{{ timerDisplay.title }}</p>
       </div>
       <div class="divider"></div>
       <div class="grid grid-flow-col gap-5 text-center auto-cols-max">

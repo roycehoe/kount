@@ -22,7 +22,6 @@ export interface CreateTimerDisplay {
 }
 
 
-
 export function getMetricTime(seconds: number): MetricTime {
     return {
         hours: Math.floor(seconds / 3600) % 24,
