@@ -1,16 +1,44 @@
-<script lang="ts" setup>import { showHours, showMinutes, showSeconds } from '@/services/survey/convertTime';
-import { CreateTimerResponse } from '@/services/survey/getCreateTimerResponse';
-import { getDashboardDisplayResponse } from '@/services/survey/getDashboardDisplayResponse';
-import { getDeleteTimerResponse } from '@/services/survey/getDeleteTimerResponse';
+<script lang="ts" setup>import { getMetricTime, showHours, showMinutes, showSeconds } from '@/services/timer/convertTime';
+import { CreateTimerResponse } from '@/services/timer/getCreateTimerResponse';
+import { getDashboardDisplayResponse } from '@/services/timer/getDashboardDisplayResponse';
+import { getDeleteTimerResponse } from '@/services/timer/getDeleteTimerResponse';
 import { onBeforeMount, ref } from 'vue';
 
 
-const dashboardInfo = ref({} as Array<CreateTimerResponse>)
+interface DashboardInfoDisplay {
+  id: number
+  title: string
+  createdAt: any
+  hours: number
+  minutes: number
+  seconds: number
+}
+
+
+const dashboardInfo = ref([] as Array<DashboardInfoDisplay>)
+
+
+function createDashboardDisplay(createTimerResponse: Array<CreateTimerResponse>) {
+  createTimerResponse.forEach(element => {
+    console.log(element.id)
+    dashboardInfo.value.push({
+      id: element.id,
+      title: element.title,
+      createdAt: element.created_at,
+      hours: getMetricTime(element.time).hours,
+      minutes: getMetricTime(element.time).minutes,
+      seconds: getMetricTime(element.time).seconds,
+    })
+  })
+}
+
+
 
 async function showDashboardInfo() {
   const { ok: isSuccessful, val: response } = await getDashboardDisplayResponse()
   if (isSuccessful) {
-    dashboardInfo.value = response as Array<CreateTimerResponse>
+    const createTimerResponse = response as Array<CreateTimerResponse>
+    createDashboardDisplay(createTimerResponse)
     return
   }
   console.error(response)
@@ -33,6 +61,7 @@ onBeforeMount(async () => await showDashboardInfo());
 
 
 <template>
+  {{ dashboardInfo }}
   <div v-for="info in dashboardInfo">
     <div class="survey bg-neutral-100 rounded-md flex flex-row justify-between m-2 bg-gray-50">
       <div class="flex items-center">
@@ -41,9 +70,9 @@ onBeforeMount(async () => await showDashboardInfo());
 
       <div class="flex items-center">
         <kbd class="kbd font-mono mr-36">
-          <p>{{ showHours(info.time) }}h:</p>
-          <p>{{ showMinutes(info.time) }}m:</p>
-          <p>{{ showSeconds(info.time) }}s</p>
+          <p>{{ info.hours }}h:</p>
+          <p>{{ info.minutes }}m:</p>
+          <p>{{ info.seconds }}s</p>
         </kbd>
         <button
           class="btn btn-success bg-green-500 m-1 w-16 h-8 rounded-md hover:bg-green-600 border-none min-h-0"

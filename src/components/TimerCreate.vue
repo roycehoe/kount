@@ -2,9 +2,9 @@
 import { ref } from 'vue';
 import PlusIcon from './Icons/PlusIcon.vue';
 import MinusIcon from './Icons/MinusIcon.vue';
-import { getSeconds } from '@/services/survey/convertTime';
+import { getSeconds } from '@/services/timer/convertTime';
 import { client } from '@/services';
-import { CreateTimerRequest, getCreateTimerResponse } from '@/services/survey/getCreateTimerResponse';
+import { CreateTimerRequest, getCreateTimerResponse } from '@/services/timer/getCreateTimerResponse';
 
 
 const DEFAULT_CREATE_TIMER_FORM_DISPLAY = {
