@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { TimerDisplay } from '@/services/timer/convertTime';
-import { PropType, ref } from 'vue';
-
+import { getMetricTime, TimerDisplay } from '@/services/timer/convertTime';
+import { onBeforeMount, PropType, ref, toRef, watch } from 'vue';
 
 const props = defineProps({
   data: {
@@ -9,41 +8,23 @@ const props = defineProps({
   }
 })
 
-
-interface getCreateTimerResponse {
-  title: string
-  totalSeconds: number //need two variables like time left and total time
-}
-
-interface GetTimerDisplay {
-  title: string,
-  hours: number,
-  minutes: number,
-  seconds: number
-}
-
-const timerDisplay = ref({
-  id: 1,
-  title: "placeholder",
-  createdAt: 1,
-  hours: 0,
-  minutes: 0,
-  seconds: 30,
-  time: 30
-} as TimerDisplay)
-
-
-
 const isPaused = ref(false)
 const isTimerStarted = ref(false)
+const timerDisplay = ref({} as TimerDisplay)
 
 
+function getTimerDisplay() {
+  timerDisplay.value = Object.assign({}, props.data)
+}
+
+watch(props, () => getTimerDisplay())
 
 function updateTimerDisplay() {
-  timerDisplay.value.title = timerDisplay.value.title;
-  timerDisplay.value.hours = Math.floor(timerDisplay.value.time / 3600) % 24;
-  timerDisplay.value.minutes = Math.floor(timerDisplay.value.time / 60) % 60;
-  timerDisplay.value.seconds = Math.floor(timerDisplay.value.time) % 60;
+  const { hours: hours, minutes: minutes, seconds: seconds } = getMetricTime(timerDisplay.value.time)
+
+  timerDisplay.value.hours = hours
+  timerDisplay.value.minutes = minutes
+  timerDisplay.value.seconds = seconds
 }
 
 function startCountdown() {
@@ -69,12 +50,13 @@ function startCountdown() {
 }
 
 
-updateTimerDisplay()
+onBeforeMount(async () => updateTimerDisplay());
 
 </script>
 
 
 <template>
+  <p>timer data: {{ timerDisplay }}</p>
   <p>timer data: {{ data }}</p>
   <div class="timer-display__centered flex justify-center m-4">
     <div class="timer-display flex flex-col">
@@ -115,6 +97,7 @@ updateTimerDisplay()
         >Pause</button>
         <button
           class="btn btn-success bg-red-500 m-1 w-32 h-16 rounded-md hover:bg-red-600 border-none min-h-0"
+          @click="getTimerDisplay"
         >Reset - This button actually sends a get request</button>
       </div>
     </div>
