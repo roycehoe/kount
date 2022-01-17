@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import PlusIcon from './Icons/PlusIcon.vue';
 import MinusIcon from './Icons/MinusIcon.vue';
 import { getSeconds } from '@/services/timer/convertTime';
-import { client } from '@/services';
 import { CreateTimerRequest, getCreateTimerResponse } from '@/services/timer/getCreateTimerResponse';
 
 
@@ -49,13 +48,14 @@ async function createTimer() {
       <p class="ml-2">Create a new timer</p>
     </div>
   </button>
+  <div class="divider"></div>
 
   <div v-if="isCreateTimer">
     <div class="form-control">
       <input
         type="text"
         placeholder="Timer name"
-        class="input input-bordered"
+        class="input input-info input-bordered"
         v-model="createTimerFormDisplay.title"
       />
     </div>

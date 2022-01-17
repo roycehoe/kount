@@ -10,14 +10,21 @@ const props = defineProps({
 
 const isPaused = ref(false)
 const isTimerStarted = ref(false)
+const isTimerEnded = ref(false)
 const timerDisplay = ref({} as TimerDisplay)
-
 
 function getTimerDisplay() {
   timerDisplay.value = Object.assign({}, props.data)
 }
 
-watch(props, () => getTimerDisplay())
+function getAssetUrl(folder: string, name: string): string {
+  return new URL(`../assets/${folder}/${name}`, import.meta.url).href
+}
+
+function playBell() {
+  const audio = new Audio(getAssetUrl('audio', 'bell.mp3'))
+  audio.play()
+}
 
 function updateTimerDisplay() {
   const { hours: hours, minutes: minutes, seconds: seconds } = getMetricTime(timerDisplay.value.time)
@@ -33,8 +40,14 @@ function startCountdown() {
 
   const timer = setInterval(() => {
     if (timerDisplay.value.time < 0) {
+      isTimerEnded.value = true
+      isPaused.value = true
+      isTimerStarted.value = false
+
+      playBell()
+      timerDisplay.value.time = -1
+
       clearInterval(timer)
-      timerDisplay.value.time = 0
       updateTimerDisplay()
       return
     }
@@ -50,6 +63,7 @@ function startCountdown() {
 }
 
 
+watch(props, () => getTimerDisplay())
 onBeforeMount(async () => updateTimerDisplay());
 
 </script>
@@ -83,8 +97,10 @@ onBeforeMount(async () => updateTimerDisplay());
         </div>
       </div>
       <div class="timer-buttons flex flex-row justify-evenly mt-8">
+        <!-- <div v-if="!isTimerEnded"> -->
         <button
           class="btn btn-success bg-green-500 m-1 w-32 h-16 rounded-md hover:bg-green-600 border-none min-h-0"
+          :class="{ 'btn-disabled bg-gray-300': isTimerEnded }"
           v-if="isPaused || !isTimerStarted"
           @click="startCountdown"
         >
@@ -96,9 +112,13 @@ onBeforeMount(async () => updateTimerDisplay());
           v-else
           @click="isPaused = true"
         >Pause</button>
+        <!-- </div> -->
         <button
           class="btn btn-success bg-red-500 m-1 w-32 h-16 rounded-md hover:bg-red-600 border-none min-h-0"
-          @click="() => { getTimerDisplay(); isTimerStarted = false }"
+          :class="{
+            'btn-disabled bg-gray-300': !isPaused
+          }"
+          @click="() => { getTimerDisplay(); isTimerStarted = false; isTimerEnded = false; isPaused = false }"
         >Reset</button>
       </div>
     </div>
