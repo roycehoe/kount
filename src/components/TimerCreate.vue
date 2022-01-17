@@ -24,7 +24,7 @@ interface CreateTimerDisplay {
 const isCreateTimer = ref(false)
 const createTimerFormDisplay = ref(DEFAULT_CREATE_TIMER_FORM_DISPLAY as CreateTimerDisplay)
 
-function getCreateTimerSeconds() {
+function getCreateTimerSeconds(): number {
   return getSeconds(createTimerFormDisplay.value.hours, createTimerFormDisplay.value.minutes, createTimerFormDisplay.value.seconds)
   //please refactor this
 }
@@ -42,6 +42,7 @@ async function createTimer() {
 </script>
 
 <template>
+  <p>{{ createTimerFormDisplay }}</p>
   <button class="hover:bg-neutral-100 flex flex-row" @click="isCreateTimer = !isCreateTimer">
     <div class="flex">
       <MinusIcon class="mb-2" v-if="isCreateTimer"></MinusIcon>
@@ -64,9 +65,19 @@ async function createTimer() {
     <div class="timer-form flex justify-between">
       <div class="timer-form--selection flex">
         <div class="timer-form--inputs">
-          <input type="range" max="23" class="range" v-model="createTimerFormDisplay.hours" />
-          <input type="range" max="59" class="range" v-model="createTimerFormDisplay.minutes" />
-          <input type="range" max="59" class="range" v-model="createTimerFormDisplay.seconds" />
+          <input type="range" max="23" class="range" v-model.number="createTimerFormDisplay.hours" />
+          <input
+            type="range"
+            max="59"
+            class="range"
+            v-model.number="createTimerFormDisplay.minutes"
+          />
+          <input
+            type="range"
+            max="59"
+            class="range"
+            v-model.number="createTimerFormDisplay.seconds"
+          />
           <!-- note to self - set default value  -->
         </div>
 
