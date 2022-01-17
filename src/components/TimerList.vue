@@ -18,6 +18,7 @@ function createDashboardDisplay(createTimerResponse: Array<CreateTimerResponse>)
       hours: getMetricTime(element.time).hours,
       minutes: getMetricTime(element.time).minutes,
       seconds: getMetricTime(element.time).seconds,
+      time: element.time
     })
   })
 }

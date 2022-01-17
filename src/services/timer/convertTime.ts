@@ -11,7 +11,8 @@ export interface TimerDisplay {
     hours: number
     minutes: number
     seconds: number
-}
+    time: number
+} //to flatten
 
 
 export function getSeconds(hours: number, minutes: number, seconds: number) {

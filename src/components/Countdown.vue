@@ -4,11 +4,10 @@ import { PropType, ref } from 'vue';
 
 
 const props = defineProps({
-  timerData: {
+  data: {
     type: Object as PropType<TimerDisplay>
   }
 })
-
 
 
 interface getCreateTimerResponse {
@@ -23,49 +22,54 @@ interface GetTimerDisplay {
   seconds: number
 }
 
-
-
-const timerResponse = ref({
-  title: "placeholder",
-  totalSeconds: 30
-} as getCreateTimerResponse)
-
 const timerDisplay = ref({
-} as GetTimerDisplay)
+  id: 1,
+  title: "placeholder",
+  createdAt: 1,
+  hours: 0,
+  minutes: 0,
+  seconds: 30,
+  time: 30
+} as TimerDisplay)
+
 
 
 const isPaused = ref(false)
 const isTimerStarted = ref(false)
 
-function setTimer() {
-  timerDisplay.value.title = timerResponse.value.title;
-  timerDisplay.value.hours = Math.floor(timerResponse.value.totalSeconds / 3600) % 24;
-  timerDisplay.value.minutes = Math.floor(timerResponse.value.totalSeconds / 60) % 60;
-  timerDisplay.value.seconds = Math.floor(timerResponse.value.totalSeconds) % 60;
+
+
+function updateTimerDisplay() {
+  timerDisplay.value.title = timerDisplay.value.title;
+  timerDisplay.value.hours = Math.floor(timerDisplay.value.time / 3600) % 24;
+  timerDisplay.value.minutes = Math.floor(timerDisplay.value.time / 60) % 60;
+  timerDisplay.value.seconds = Math.floor(timerDisplay.value.time) % 60;
 }
 
 function startCountdown() {
   isPaused.value = false
   isTimerStarted.value = true
-  const placeholder = setInterval(() => {
-    if (timerResponse.value.totalSeconds < 0) {
-      clearInterval(placeholder)
-      timerResponse.value.totalSeconds = 0
-      setTimer()
+
+  const timer = setInterval(() => {
+    if (timerDisplay.value.time < 0) {
+      clearInterval(timer)
+      timerDisplay.value.time = 0
+      updateTimerDisplay()
       return
     }
     if (isPaused.value) {
-      clearInterval(placeholder)
-      setTimer()
+      clearInterval(timer)
+      updateTimerDisplay()
       return
     }
-    timerResponse.value.totalSeconds -= 1
-    setTimer()
+
+    timerDisplay.value.time -= 1
+    updateTimerDisplay()
   }, 1000)
 }
 
 
-setTimer()
+updateTimerDisplay()
 
 </script>
 
