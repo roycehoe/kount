@@ -1,5 +1,15 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { TimerDisplay } from '@/services/timer/convertTime';
+import { PropType, ref } from 'vue';
+
+
+const props = defineProps({
+  timerData: {
+    type: Object as PropType<TimerDisplay>
+  }
+})
+
+
 
 interface getCreateTimerResponse {
   title: string
@@ -55,15 +65,13 @@ function startCountdown() {
 }
 
 
-function resetCountdown() {
-}
-
 setTimer()
 
 </script>
 
 
 <template>
+  <p>timer data: {{ data }}</p>
   <div class="timer-display__centered flex justify-center m-4">
     <div class="timer-display flex flex-col">
       <div class="timer__header">

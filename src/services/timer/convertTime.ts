@@ -4,19 +4,15 @@ interface MetricTime {
     seconds: number
 }
 
-
-
-export function showHours(seconds: number) {
-    return Math.floor(seconds / 3600) % 24
+export interface TimerDisplay {
+    id: number
+    title: string
+    createdAt: any
+    hours: number
+    minutes: number
+    seconds: number
 }
 
-export function showMinutes(seconds: number) {
-    return Math.floor(seconds / 60) % 60
-}
-
-export function showSeconds(seconds: number) {
-    return Math.floor(seconds) % 60
-}
 
 export function getSeconds(hours: number, minutes: number, seconds: number) {
     return ((hours * 60 * 60) + (minutes * 60) + seconds)

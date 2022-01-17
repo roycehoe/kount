@@ -1,26 +1,16 @@
-<script lang="ts" setup>import { getMetricTime, showHours, showMinutes, showSeconds } from '@/services/timer/convertTime';
+<script lang="ts" setup>import { getMetricTime, TimerDisplay } from '@/services/timer/convertTime';
 import { CreateTimerResponse } from '@/services/timer/getCreateTimerResponse';
-import { getDashboardDisplayResponse } from '@/services/timer/getDashboardDisplayResponse';
+import { getDashboardInfoResponse } from '@/services/timer/getDashboardDisplayResponse';
 import { getDeleteTimerResponse } from '@/services/timer/getDeleteTimerResponse';
+import { emit } from 'process';
 import { onBeforeMount, ref } from 'vue';
 
 
-interface DashboardInfoDisplay {
-  id: number
-  title: string
-  createdAt: any
-  hours: number
-  minutes: number
-  seconds: number
-}
-
-
-const dashboardInfo = ref([] as Array<DashboardInfoDisplay>)
-
+const dashboardInfo = ref([] as Array<TimerDisplay>)
+const countdownDisplay = ref({} as TimerDisplay)
 
 function createDashboardDisplay(createTimerResponse: Array<CreateTimerResponse>) {
   createTimerResponse.forEach(element => {
-    console.log(element.id)
     dashboardInfo.value.push({
       id: element.id,
       title: element.title,
@@ -35,7 +25,7 @@ function createDashboardDisplay(createTimerResponse: Array<CreateTimerResponse>)
 
 
 async function showDashboardInfo() {
-  const { ok: isSuccessful, val: response } = await getDashboardDisplayResponse()
+  const { ok: isSuccessful, val: response } = await getDashboardInfoResponse()
   if (isSuccessful) {
     const createTimerResponse = response as Array<CreateTimerResponse>
     createDashboardDisplay(createTimerResponse)
@@ -53,15 +43,12 @@ async function deleteTimer(timerId: number) {
   console.error(response)
 }
 
-
-
 onBeforeMount(async () => await showDashboardInfo());
 
 </script>
 
 
 <template>
-  {{ dashboardInfo }}
   <div v-for="info in dashboardInfo">
     <div class="survey bg-neutral-100 rounded-md flex flex-row justify-between m-2 bg-gray-50">
       <div class="flex items-center">
@@ -75,6 +62,7 @@ onBeforeMount(async () => await showDashboardInfo());
           <p>{{ info.seconds }}s</p>
         </kbd>
         <button
+          @click="$emit('emitTimerData', info)"
           class="btn btn-success bg-green-500 m-1 w-16 h-8 rounded-md hover:bg-green-600 border-none min-h-0"
         >View</button>
         <button
