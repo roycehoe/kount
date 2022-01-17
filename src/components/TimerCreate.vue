@@ -2,31 +2,26 @@
 import { ref } from 'vue';
 import PlusIcon from './Icons/PlusIcon.vue';
 import MinusIcon from './Icons/MinusIcon.vue';
-import { getSeconds } from '@/services/timer/convertTime';
+import { CreateTimerDisplay, getSeconds } from '@/services/timer/convertTime';
 import { CreateTimerRequest, getCreateTimerResponse } from '@/services/timer/getCreateTimerResponse';
 
 
 const DEFAULT_CREATE_TIMER_FORM_DISPLAY = {
   title: "",
   hours: 0,
-  minutes: 15,
+  minutes: 5,
   seconds: 0
 }
-
-interface CreateTimerDisplay {
-  title: string
-  hours: number
-  minutes: number
-  seconds: number
-}
-
 const isCreateTimer = ref(false)
 const createTimerFormDisplay = ref(DEFAULT_CREATE_TIMER_FORM_DISPLAY as CreateTimerDisplay)
 
 function getCreateTimerSeconds(): number {
-  return getSeconds(createTimerFormDisplay.value.hours, createTimerFormDisplay.value.minutes, createTimerFormDisplay.value.seconds)
-  //please refactor this
+  const convertedHours = createTimerFormDisplay.value.hours * 60 * 60
+  const convertedMinutes = createTimerFormDisplay.value.minutes * 60
+
+  return (convertedHours + convertedMinutes + createTimerFormDisplay.value.seconds)
 }
+
 
 async function createTimer() {
   const { ok: isSuccessful, val: response } = await getCreateTimerResponse({ title: createTimerFormDisplay.value.title, time: getCreateTimerSeconds() } as CreateTimerRequest)
@@ -55,6 +50,7 @@ async function createTimer() {
       <input
         type="text"
         placeholder="Timer name"
+        maxlength="50"
         class="input input-info input-bordered"
         v-model="createTimerFormDisplay.title"
       />
@@ -99,7 +95,7 @@ async function createTimer() {
         <button
           @click="createTimer"
           class="btn btn-success bg-green-500 border-none hover:bg-green-600"
-          :class="{ 'btn-disabled bg-slate-400': !createTimerFormDisplay.title || !getCreateTimerSeconds() }"
+          :class="{ 'btn-disabled bg-slate-400': !getCreateTimerSeconds() }"
         >Create Timer</button>
       </div>
     </div>

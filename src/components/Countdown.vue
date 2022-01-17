@@ -11,7 +11,7 @@ const props = defineProps({
 const isPaused = ref(false)
 const isTimerStarted = ref(false)
 const isTimerEnded = ref(false)
-const timerDisplay = ref({} as TimerDisplay)
+const timerDisplay = ref({} as TimerDisplay)//refactor to countdown timer throughout this component
 
 function getTimerDisplay() {
   timerDisplay.value = Object.assign({}, props.data)
@@ -34,29 +34,32 @@ function updateTimerDisplay() {
   timerDisplay.value.seconds = seconds
 }
 
+
+function showEndCountdownDisplay() {
+  isTimerEnded.value = true
+  isPaused.value = true
+  isTimerStarted.value = false
+
+  playBell()
+  timerDisplay.value.time = -1
+  updateTimerDisplay()
+}
+
 function startCountdown() {
   isPaused.value = false
   isTimerStarted.value = true
 
   const timer = setInterval(() => {
     if (timerDisplay.value.time < 0) {
-      isTimerEnded.value = true
-      isPaused.value = true
-      isTimerStarted.value = false
-
-      playBell()
-      timerDisplay.value.time = -1
-
+      showEndCountdownDisplay()
       clearInterval(timer)
-      updateTimerDisplay()
       return
     }
     if (isPaused.value) {
-      clearInterval(timer)
       updateTimerDisplay()
+      clearInterval(timer)
       return
     }
-
     timerDisplay.value.time -= 1
     updateTimerDisplay()
   }, 1000)
@@ -97,7 +100,6 @@ onBeforeMount(async () => updateTimerDisplay());
         </div>
       </div>
       <div class="timer-buttons flex flex-row justify-evenly mt-8">
-        <!-- <div v-if="!isTimerEnded"> -->
         <button
           class="btn btn-success bg-green-500 m-1 w-32 h-16 rounded-md hover:bg-green-600 border-none min-h-0"
           :class="{ 'btn-disabled bg-gray-300': isTimerEnded }"
@@ -112,7 +114,6 @@ onBeforeMount(async () => updateTimerDisplay());
           v-else
           @click="isPaused = true"
         >Pause</button>
-        <!-- </div> -->
         <button
           class="btn btn-success bg-red-500 m-1 w-32 h-16 rounded-md hover:bg-red-600 border-none min-h-0"
           :class="{

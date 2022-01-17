@@ -12,12 +12,16 @@ export interface TimerDisplay {
     minutes: number
     seconds: number
     time: number
-} //to flatten
-
-
-export function getSeconds(hours: number, minutes: number, seconds: number): number {
-    return ((hours * 60 * 60) + (minutes * 60) + seconds)
 }
+
+export interface CreateTimerDisplay {
+    title: string
+    hours: number
+    minutes: number
+    seconds: number
+}
+
+
 
 export function getMetricTime(seconds: number): MetricTime {
     return {
