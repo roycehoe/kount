@@ -56,9 +56,7 @@ onBeforeMount(async () => updateTimerDisplay());
 
 
 <template>
-  <p>timer data: {{ timerDisplay }}</p>
-  <p>timer data: {{ data }}</p>
-  <div class="timer-display__centered flex justify-center m-4">
+  <div class="timer-display__centered flex justify-center m-4" v-if="data.title">
     <div class="timer-display flex flex-col">
       <div class="timer__header">
         <p class="text-center font-bold text-2xl">{{ timerDisplay.title }}</p>
@@ -89,7 +87,10 @@ onBeforeMount(async () => updateTimerDisplay());
           class="btn btn-success bg-green-500 m-1 w-32 h-16 rounded-md hover:bg-green-600 border-none min-h-0"
           v-if="isPaused || !isTimerStarted"
           @click="startCountdown"
-        >Start</button>
+        >
+          <p v-if="!isTimerStarted">Start</p>
+          <p v-else>Continue</p>
+        </button>
         <button
           class="btn btn-success bg-blue-500 m-1 w-32 h-16 rounded-md hover:bg-blue-600 border-none min-h-0"
           v-else
@@ -97,8 +98,8 @@ onBeforeMount(async () => updateTimerDisplay());
         >Pause</button>
         <button
           class="btn btn-success bg-red-500 m-1 w-32 h-16 rounded-md hover:bg-red-600 border-none min-h-0"
-          @click="getTimerDisplay"
-        >Reset - This button actually sends a get request</button>
+          @click="() => { getTimerDisplay(); isTimerStarted = false }"
+        >Reset</button>
       </div>
     </div>
   </div>

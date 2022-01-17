@@ -17,7 +17,6 @@ export interface TimerDisplay {
 
 export function getSeconds(hours: number, minutes: number, seconds: number): number {
     return ((hours * 60 * 60) + (minutes * 60) + seconds)
-    // return ((hours * 60 * 60) + (minutes * 60) + seconds)
 }
 
 export function getMetricTime(seconds: number): MetricTime {

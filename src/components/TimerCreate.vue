@@ -42,7 +42,6 @@ async function createTimer() {
 </script>
 
 <template>
-  <p>{{ createTimerFormDisplay }}</p>
   <button class="hover:bg-neutral-100 flex flex-row" @click="isCreateTimer = !isCreateTimer">
     <div class="flex">
       <MinusIcon class="mb-2" v-if="isCreateTimer"></MinusIcon>
