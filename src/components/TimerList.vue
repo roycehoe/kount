@@ -1,7 +1,7 @@
 <script lang="ts" setup>import { showHours, showMinutes, showSeconds } from '@/services/survey/convertTime';
 import { CreateTimerResponse } from '@/services/survey/getCreateTimerResponse';
 import { getDashboardDisplayResponse } from '@/services/survey/getDashboardDisplayResponse';
-import { DeleteTimerRequest, getDeleteTimerResponse } from '@/services/survey/getDeleteTimerResponse';
+import { getDeleteTimerResponse } from '@/services/survey/getDeleteTimerResponse';
 import { onBeforeMount, ref } from 'vue';
 
 
