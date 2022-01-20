@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { getAssetUrl } from '@/services/assets';
 import { getMetricTime, TimerDisplay } from '@/services/timer/convertTime';
-import { onBeforeMount, PropType, ref, watch, StyleHTMLAttributes } from 'vue';
+import { onBeforeMount, PropType, ref, watch } from 'vue';
 
 
 const props = defineProps({
@@ -81,19 +81,22 @@ onBeforeMount(async () => updateTimerDisplay());
       <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <span :style="{ '--value': timerDisplay.minutes } as StyleHTMLAttributes"></span>
+            <span :style="// @ts-ignore
+            { '--value': timerDisplay.minutes }"></span>
           </span>
           hours
         </div>
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <span :style="{ '--value': timerDisplay.minutes } as StyleHTMLAttributes"></span>
+            <span :style="// @ts-ignore 
+            { '--value': timerDisplay.minutes }"></span>
           </span>
           min
         </div>
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <span :style="{ '--value': timerDisplay.seconds } as StyleHTMLAttributes"></span>
+            <span :style=" // @ts-ignore
+            { '--value': timerDisplay.seconds }"></span>
           </span>
           sec
         </div>
