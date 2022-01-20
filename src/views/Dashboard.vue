@@ -4,6 +4,9 @@ import { PropType, ref } from 'vue';
 import TimerCreate from '@/components/TimerCreate.vue';
 import Countdown from '@/components/Countdown.vue';
 import { TimerDisplay } from '@/services/timer/convertTime';
+import { useTimers } from '@/composables/useTimers';
+
+const { getActiveTimer } = useTimers()
 
 const props = defineProps({
   timerData: {
@@ -13,10 +16,9 @@ const props = defineProps({
 
 const timerData = ref({} as TimerDisplay)
 
-function updateTimerData(emittedTimerData: TimerDisplay) {
-  timerData.value = emittedTimerData
-}
-
+// function updateTimerData(emittedTimerData: TimerDisplay) {
+//   timerData.value = emittedTimerData
+// }
 
 
 </script>
@@ -25,17 +27,17 @@ function updateTimerData(emittedTimerData: TimerDisplay) {
   <div class="min-h-full">
     <div class="bg-white shadow">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <button @click="$router.push('/')" class="text-3xl font-bold text-gray-900">Kount</button>
+        <!-- <button @click="$router.push('/')" class="text-3xl font-bold text-gray-900">Kount</button> -->
       </div>
     </div>
     <div>
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="border-4 border-dashed border-gray-200 rounded-lg min-h-16 h-max my-10">
-          <Countdown :data="timerData"></Countdown>
+          <Countdown :data="getActiveTimer()"></Countdown>
         </div>
         <TimerCreate></TimerCreate>
         <div class="border-4 border-dashed border-gray-200 rounded-lg min-h-16 h-max mt-10">
-          <TimerList @emitTimerData="updateTimerData"></TimerList>
+          <TimerList @emitTimerData="(emittedTimerData) => timerData = emittedTimerData"></TimerList>
         </div>
       </div>
     </div>

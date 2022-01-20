@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getMetricTime, TimerDisplay } from '@/services/timer/convertTime';
-import { onBeforeMount, PropType, ref, StyleValue, toRef, watch } from 'vue';
+import { onBeforeMount, PropType, ref, watch } from 'vue';
 
 const props = defineProps({
   data: {
@@ -14,7 +14,11 @@ const isTimerEnded = ref(false)
 const timerDisplay = ref({} as TimerDisplay)//refactor to countdown timer throughout this component
 
 function getTimerDisplay() {
-  timerDisplay.value = Object.assign({}, props.data)
+  timerDisplay.value = resetTimer()
+}
+
+function resetTimer() {
+  return Object.assign({}, props.data)
 }
 
 function getAssetUrl(folder: string, name: string): string {
@@ -66,7 +70,7 @@ function startCountdown() {
 }
 
 function displayTimerMinutes() {
-  return { '--value': timerDisplay.value.minutes } as StyleValue
+  return { '--value': timerDisplay.value.minutes }
 }
 
 
@@ -86,21 +90,22 @@ onBeforeMount(async () => updateTimerDisplay());
       <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <!-- <span :style="{ '--value': timerDisplay.hours }"></span> -->
-            <span :style="{ '--value': timerDisplay.minutes } as StyleValue"></span>
+            <span :style="// @ts-ignore
+            { '--value': timerDisplay.hours }"></span>
           </span>
           hours
         </div>
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <span :style="{ '--value': timerDisplay.minutes } as StyleValue"></span>
-            <span style="--value: 10"></span>
+            <span :style="// @ts-ignore 
+            { '--value': timerDisplay.minutes }"></span>
           </span>
           min
         </div>
         <div class="flex flex-col">
           <span class="font-mono text-8xl countdown">
-            <span :style="{ '--value': timerDisplay.seconds } as StyleValue"></span>
+            <span :style="// @ts-ignore 
+            { '--value': timerDisplay.seconds }"></span>
           </span>
           sec
         </div>
