@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  app:
+  webpage:
     build: ./frontend
     volumes:
       - ./frontend/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -20,7 +20,5 @@ services:
       POSTGRES_DB: card_game
       POSTGRES_PASSWORD: password
 
-  game:
+  timer-service:
     build: ./backend
-    ports:
-      - "8080:8080"

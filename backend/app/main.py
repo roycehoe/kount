@@ -16,7 +16,9 @@ load_dotenv()
 OPENAPI_URL_CONFIG = os.getenv("OPENAPI_URL_CONFIG")
 
 
-app = FastAPI(docs_url="/docs" if OPENAPI_URL_CONFIG is not None else None)
+app = FastAPI(
+    docs_url="/docs" if OPENAPI_URL_CONFIG is not None else None)
+# app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,

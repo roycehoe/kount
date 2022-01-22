@@ -14,4 +14,4 @@ RUN poetry config virtualenvs.create false &&\
 
 RUN apk del gcc musl-dev python3-dev libffi-dev openssl-dev cargo g++ py-pip
 
-CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
+CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 80
