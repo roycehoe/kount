@@ -24,6 +24,7 @@ A timer application. Built with Python and Typescript.
  - Implement responsive web design with Tailwind css and daisy.ui components
 
 # Deployment
+ - Implement Poetry and Pyenv to create a project virtual environment for backend development
  - Create Docker files for both backend and frontend
  - Implement docker-compose to create container networks
  - Implement a reverse proxy with Nginx to send requests to the respective containers, and to simplify deployment on a single server
